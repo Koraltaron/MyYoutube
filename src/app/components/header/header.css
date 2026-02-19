@@ -1,0 +1,23 @@
+section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background: rgb(220, 38, 38);
+    color: white;
+    height: 50px;
+    align-items: center;
+}
+
+section > nav {
+    display: flex;
+    gap: 30px;
+}
+
+section > h1 {
+    font-weight: bold;
+}
+
+section > nav a:hover, section > h1:hover {
+    transform: scale(1.1);
+}

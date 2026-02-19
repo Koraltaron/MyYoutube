@@ -1,0 +1,56 @@
+<section class="section-register">
+    <h3>S'inscrire</h3>
+    <form [formGroup]="registerForm"] (ngSubmit)="onSubmit()">
+        <div>
+            <label for="username">Nom d'utilisateur</label>
+            <input 
+                name="username" 
+                type="text" 
+                formControlName="username"
+            />
+            @if(registerForm.get('username')?.touched){
+                @if(registerForm.get('username')?.errors?.['required']){
+                    <p>Le nom d'utilisateur est obligatoire</p>
+                }
+                @if(registerForm.get('username')?.errors?.['minlength']){
+                    <p>Le nom d'utilisateur doit contenir au moins deux caractères</p>
+                }
+            }
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input 
+                name="email" 
+                type="email" 
+                formControlName="email"
+            />
+             @if(registerForm.get('email')?.touched){
+                @if(registerForm.get('email')?.errors?.['required']){
+                    <p>L'email est obligatoire</p>
+                }
+                @if(registerForm.get('email')?.errors?.['email']){
+                    <p>L'email saisi n'est pas valide</p>
+                }
+            }
+        </div>
+        <div>
+            <label for="password">Mot de passe</label>
+            <input 
+                name="password" 
+                [type]="isClicked ? 'text' : 'password'"
+                formControlName="password"
+            />
+            <button (click) = "onClick()">Révéler</button>
+            @if(registerForm.get('password')?.touched){
+                @if(registerForm.get('password')?.errors?.['required']){
+                    <p>Le mot de passe est obligatoire</p>
+                }
+                @if(registerForm.get('password')?.errors?.['pattern']){
+                    <p>Le mot de passe saisi n'est pas assez fort</p>
+                }
+            }
+        </div>
+        <button type="submit" [disabled]="registerForm.valid">S'inscrire</button>
+    </form>
+    <p>Déjà inscrit ? <a routerLink="/login">Se connecter</a></p>
+</section>
