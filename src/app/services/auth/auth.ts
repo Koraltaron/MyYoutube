@@ -45,7 +45,6 @@ export class AuthService {
     }
 
     const parsedUser: UserInterface[] = JSON.parse(storedUser);
-    console.log(parsedUser)
 
     const isUserValid = parsedUser.find(el => 
       el.username === user.username &&

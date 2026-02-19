@@ -1,11 +1,31 @@
 <section class="search-section">
     <h2>Recherche de vidéos Youtube</h2>
     <div>
-        <input placeholder="..."/>
-        <button>Rechercher</button>
+        <input placeholder="..." />
+        <button class="search-button">Rechercher</button>
     </div>
 
-    <div>
-        ici il y aura les vidéos
+    <div class="videos-grid">
+        @for (video of videos(); track video.id) {
+        <div class="video-card" (keypress)="selectVideo(video)">
+            <img [src]="video.snippet.thumbnails.medium.url" [alt]="video.snippet.title" />
+            <p>{{ video.snippet.title }}</p>
+
+        </div>
+        <button [class]="favoriteVideo().has(video.id) ? `favorited` : `favorite`"
+            (click)="toggleFavoriteVideo(video.id)">Ajouter</button>
+        }
     </div>
+
+    @if (selectedVideo()) {
+    <div class="video-player-overlay" (keypress)="closeVideo()">
+        <div class="video-player" (keypress)="$event.stopPropagation()">
+            <button (click)="closeVideo()">✕ Fermer</button>
+            <iframe title="popular video" [src]="getEmbedUrl(selectedVideo().id)" width="800" height="450"
+                allowfullscreen allow="autoplay; encrypted-media">
+            </iframe>
+            <h3>{{ selectedVideo().snippet.title }}</h3>
+        </div>
+    </div>
+    }
 </section>
