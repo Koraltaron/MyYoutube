@@ -1,3 +1,8 @@
-@if(currentUser()){
+<section class="sidebar-section">
+    <h2>MyYoutube</h2>
+    @if(currentUser()){
     <p>Hello {{ currentUser()?.username }}</p>
-}
+    <h2>Playlist Vidéos</h2>
+    <p>Aucune vidéo dans votre playlist</p>
+    }
+</section>

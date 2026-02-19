@@ -1,0 +1,29 @@
+.search-section {
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 75vw;
+}
+
+.search-section > h2 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.search-section input {
+    border: solid 1px rgb(229, 231, 235);
+    border-radius: 3px;
+    width: 80%;
+    padding: 5px 0 5px 10px;
+}
+
+.search-section button {
+    position: relative;
+    right: 5px;
+    background: rgb(59, 130, 246);
+    width: 100px;
+    padding: 6px;
+    border-radius: 0px 3px 3px 0px;
+    color: white;
+}

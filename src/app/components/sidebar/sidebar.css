@@ -1,4 +1,10 @@
-h2 {
+
+.sidebar-section {
     padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.sidebar-section > h2 {
     font-weight: bold;
 }
