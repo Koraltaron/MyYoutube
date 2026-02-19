@@ -26,13 +26,11 @@ export class Register {
 
   onClick(){
     this.isClicked = !this.isClicked;
-    console.log("Coucou, valeur de isClicked: ", this.isClicked)
   }
 
   onSubmit() {
     if(this.registerForm.valid) {
       const userData = this.registerForm.value as UserInterface;
-      console.log("successful submission");
       this.authService.register(userData);
       this.router.navigate(['/login']);
     }

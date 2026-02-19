@@ -1,1 +1,29 @@
-<p>login works!</p>
+<section class="section-login">
+    <h3>Se connecter</h3>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="username">Nom d'utilisateur</label>
+            <input name="username" type="text" formControlName="username"/>
+        </div>
+        @if(loginForm.get('username')?.touched) {
+        @if(loginForm.get('username')?.errors?.['required']) {
+        <p>Le nom d'utilisateur est requis</p>
+        }
+        }
+        <div>
+            <label for="password">Mot de passe</label>
+            <input name="password" [type]="isClicked ? 'text' : 'password'" formControlName="password" />
+            <button (click)="onClick()">Révéler</button>
+        </div>
+        @if(loginForm.get('password')?.touched) {
+        @if(loginForm.get('password')?.errors?.['required']) {
+        <p>Le mot de passe est requis</p>
+        }
+        }
+        @if(loginForm.errors?.['invalidCredentials']){
+        Le nom d'utilisateur ou le mot de passe est incorrect
+        }
+        <button type="submit" class="submit-button">Se connecter</button>
+    </form>
+    <p>Pas encore de compte ? <a routerLink="/register">S'inscrire</a></p>
+</section>

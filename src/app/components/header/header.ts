@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,11 @@ import { RouterLink } from "@angular/router";
   styleUrl: './header.css',
 })
 export class Header {
+  private readonly authService = inject(AuthService);
 
+  isAuth: Signal<boolean> = this.authService.isAuthenticated;
+
+  onClickLogout() {
+    this.authService.logout();
+  }
 }

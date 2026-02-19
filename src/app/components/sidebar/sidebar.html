@@ -1,1 +1,3 @@
-<h2>MyYoutube</h2>
+@if(currentUser()){
+    <p>Hello {{ currentUser()?.username }}</p>
+}

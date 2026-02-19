@@ -3,11 +3,16 @@
         MyYoutube
     </h1>
     <nav>
-        <a routerLink="/register">
-            S'inscrire
-        </a>
-        <a routerLink="/login">
-            Se connecter
-        </a>
+        @if(isAuth()) {
+            <a routerLink="/search">Rechercher</a>
+            <a routerLink="/home" (click)="onClickLogout()">Se déconnecter</a>
+        } @else {
+            <a routerLink="/register">
+                S'inscrire
+            </a>
+            <a routerLink="/login">
+                Se connecter
+            </a>
+        }
     </nav>
 </section>

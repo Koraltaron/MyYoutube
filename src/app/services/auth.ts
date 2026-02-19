@@ -2,7 +2,7 @@ import { computed, Injectable, signal } from '@angular/core';
 
 export interface UserInterface {
   username: string;
-  email: string;
+  email?: string;
   password: string;
 }
 
@@ -12,13 +12,17 @@ export interface UserInterface {
 export class AuthService {
   private readonly currentUserSignal = signal<Partial<UserInterface> | null>(null);
 
-  // public isAuthenticated = computed(() => this.currentUserSignal() !== null);
+  public isAuthenticated = computed(() => this.currentUserSignal() !== null);
 
-  // public currentUser = computed(() => this.currentUserSignal())
+  public currentUser = computed(() => this.currentUserSignal())
 
   private getStoredUsers(): UserInterface[] {
     const stored = localStorage.getItem('users')
     return stored ? JSON.parse(stored) : []
+  }
+
+  logout() {
+    this.currentUserSignal.set(null);
   }
 
   register(userData: UserInterface): boolean {
@@ -34,5 +38,24 @@ export class AuthService {
     return true
   }
   
-  
+  checkUser(user: UserInterface): boolean {
+    const storedUser = localStorage.getItem('users');
+    if(!storedUser) {
+      return false
+    }
+
+    const parsedUser: UserInterface[] = JSON.parse(storedUser);
+    console.log(parsedUser)
+
+    const isUserValid = parsedUser.find(el => 
+      el.username === user.username &&
+      el.password === user.password
+    );
+
+    if(isUserValid) {
+      this.currentUserSignal.set(isUserValid);
+      return true;
+    }
+    return false
+  }
 }
