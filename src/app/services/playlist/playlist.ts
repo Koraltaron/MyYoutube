@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { InterfaceVideo } from '../../interfaces/interfaceVideo';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,11 @@ export class Playlist {
     this.loadFromLocalStorage();
   }
 
-  readonly allVideos = signal<any[]>([]);
+  readonly allVideos = signal<InterfaceVideo[]>([]);
 
-  toggleFavoriteVideo(video: any) {
+  toggleFavoriteVideo(video: InterfaceVideo) {
     console.log(video)
-    const id = video.id?.videoId ?? video.id;
+    const id = video.id;
 
     const current = new Set(this.favoriteVideoIds());
 
@@ -41,12 +42,12 @@ export class Playlist {
     }
   }
 
-  getFavoriteVideos(): any[] {
+  getFavoriteVideos(): InterfaceVideo[] {
     const favoriteIds = this.favoriteVideoIds();
     return this.allVideos().filter(v => favoriteIds.has(v.id));
   }
 
-  getFavoriteVideosFromList(allVideos: any[]) {
+  getFavoriteVideosFromList(allVideos: InterfaceVideo[]) {
     const favIds = this.favoriteVideoIds();
     return allVideos.filter(v => favIds.has(v.id));
   }
