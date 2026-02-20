@@ -20,9 +20,6 @@
         <p>Le mot de passe est requis</p>
         }
         }
-        @if(loginForm.errors?.['invalidCredentials']){
-        Le nom d'utilisateur ou le mot de passe est incorrect
-        }
         <button type="submit" class="submit-button">Se connecter</button>
     </form>
     <p>Pas encore de compte ? <a routerLink="/register">S'inscrire</a></p>

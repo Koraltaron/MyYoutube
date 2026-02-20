@@ -1,24 +1,32 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ApiService } from '../../services/api-service/api-service';
-
+import { Playlist } from '../../services/playlist/playlist';
+import { Search as SearchIcon } from 'lucide';
 @Component({
   selector: 'app-search',
+  standalone: true,
   imports: [],
   templateUrl: './search.html',
   styleUrl: './search.css',
+
 })
-export class Search implements OnInit {
+export class SearchComponent implements OnInit {
   private readonly apiService = inject(ApiService);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly playlist = inject(Playlist);
+  readonly searchIcon = SearchIcon;
 
   videos = signal<any[]>([]);
   selectedVideo = signal<any>(null);
-  favoriteVideo= signal<Set<string>>(new Set());
+
 
   ngOnInit(): void {
     this.apiService.getVideos().subscribe({
-      next: (res) => this.videos.set(res.items),
+      next: (res) => {
+        this.videos.set(res.items);
+        this.playlist.allVideos.set(res.items);
+      },
       error: (err) => console.error('Erreur API :', err)
     });
   }
@@ -32,20 +40,17 @@ export class Search implements OnInit {
   }
 
   getEmbedUrl(videoId: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
+    const videos = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.youtube.com/embed/${videoId}?autoplay=1`
     );
+    return videos
   }
 
-  toggleFavoriteVideo(videoId: string) {
-    const current = new Set(this.favoriteVideo());
+  favoriteVideo() {
+    return this.playlist.favoriteVideoIds()
+  }
 
-    if(current.has(videoId)) {
-      current.delete(videoId)
-    } else {
-      current.add(videoId)
-    }
-
-    this.favoriteVideo.set(current)
+  toggleFavoriteVideo(video: any){
+    this.playlist.toggleFavoriteVideo(video)
   }
 }

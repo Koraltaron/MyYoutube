@@ -10,7 +10,9 @@ export interface UserInterface {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly currentUserSignal = signal<Partial<UserInterface> | null>(null);
+  private readonly currentUserSignal = signal<Partial<UserInterface> | null>(
+    this.getStoredSession()
+  );
 
   public isAuthenticated = computed(() => this.currentUserSignal() !== null);
 
@@ -21,8 +23,14 @@ export class AuthService {
     return stored ? JSON.parse(stored) : []
   }
 
+  private getStoredSession(): Partial<UserInterface> | null {
+    const stored = localStorage.getItem('currentUser');
+    return stored ? JSON.parse(stored) : null;
+  }
+
   logout() {
     this.currentUserSignal.set(null);
+    localStorage.removeItem('currentUser');
   }
 
   register(userData: UserInterface): boolean {
@@ -53,6 +61,7 @@ export class AuthService {
 
     if(isUserValid) {
       this.currentUserSignal.set(isUserValid);
+      localStorage.setItem('currentUser', JSON.stringify(isUserValid));
       return true;
     }
     return false

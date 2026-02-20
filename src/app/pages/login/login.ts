@@ -23,9 +23,6 @@ export class Login {
     {
       username: new FormControl('', [Validators.required, ]),
       password: new FormControl('', [Validators.required, ])
-    },
-    {
-      validators: [this.credentialsValidator.bind(this)]
     }
   )
 
@@ -41,20 +38,11 @@ export class Login {
       username: username!,
       password: password!
     });
-    isValid ? this.router.navigate(['/']) : this.router.navigate(['/register']);
 
-  }
-
-  credentialsValidator(control: AbstractControl): ValidationErrors | null {
-    const username = control.get('username')?.value;
-    const password = control.get('password')?.value;
-    
-    if(!username || !password) {
-      return null;
-    }
-
-    const isValid = this.authService.checkUser({username, password})
-
-    return isValid ? null : { invalidCredentials: true };
+    if(isValid){
+      this.router.navigate(['/search']);
+    } else {
+      this.loginForm.setErrors({ invalidCredentials: true });
+    } 
   }
 }
