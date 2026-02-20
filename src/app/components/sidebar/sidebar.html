@@ -1,16 +1,20 @@
 <section class="sidebar-section">
   <h2>MyYoutube</h2>
   @if(currentUser()){
-    <p>Hello {{ currentUser()?.username }}</p>
-    <h2>Playlist Vidéos</h2>
-    @if(favoritedVideo().length){
-      <ul>
-        @for(video of favoritedVideo(); track video.id){
-          <li>{{ video.snippet.title }}</li>
-        }
-      </ul>
-    } @else {
-      <p>Aucune vidéo dans votre playlist</p>
+  <p>Hello {{ currentUser()?.username }}</p>
+  <h2>Playlist Vidéos</h2>
+  @if(favoritedVideo().length){
+  <ul>
+    @for(video of favoritedVideo(); track video.id){
+    <div class="playlist-item">
+      <li>{{ video.snippet.title }}</li>
+      <button (click)="removeVideo(video.id)">X</button>
+    </div>
+
     }
+  </ul>
+  } @else {
+  <p>Aucune vidéo dans votre playlist</p>
+  }
   }
 </section>

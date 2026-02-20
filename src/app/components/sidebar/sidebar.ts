@@ -17,4 +17,11 @@ export class Sidebar {
   favoritedVideo() {
     return this.playlistService.getFavoriteVideos();
   }
+
+  removeVideo(videoId: string) {
+    const current = new Set(this.playlistService.favoriteVideoIds());
+    current.delete(videoId);
+    this.playlistService.favoriteVideoIds.set(current);
+    this.playlistService.saveToLocalStorage(current);
+  }
 }

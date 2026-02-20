@@ -8,3 +8,9 @@
 .sidebar-section > h2 {
     font-weight: bold;
 }
+
+.playlist-item{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}

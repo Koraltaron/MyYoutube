@@ -12,18 +12,18 @@ export class Playlist {
   }
 
   readonly allVideos = signal<any[]>([]);
+
   toggleFavoriteVideo(video: any) {
     console.log(video)
     const id = video.id?.videoId ?? video.id;
-    console.log('id extrait :', id);
 
     const current = new Set(this.favoriteVideoIds());
 
 
-    if(current.has(video.id)) {
-      current.delete(video.id)
+    if(current.has(id)) {
+      current.delete(id)
     } else {
-      current.add(video.id)
+      current.add(id)
     }
 
     this.favoriteVideoIds.set(current);
